@@ -16,6 +16,8 @@ public class GUIProjekt {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+                DBVerbindung db=new DBVerbindung();
+        db.setVisible(true);
     }
     
 }

@@ -5,6 +5,13 @@
  */
 package guiprojekt;
 
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  *
  * @author sonrru15
@@ -14,8 +21,20 @@ public class DBVerbindung extends javax.swing.JFrame {
     /**
      * Creates new form DBVerbindung
      */
+    ResultSet rs_add=null;
+    ResultSet rs_delete=null;
+    ResultSet rs_update=null;
+    ResultSet rs_select=null;
+    Connection con = null;
+    DatabaseMetaData md = null;
     public DBVerbindung() {
         initComponents();
+        
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Fehler beim Laden des Treibers");
+        }
     }
 
     /**
@@ -68,6 +87,11 @@ public class DBVerbindung extends javax.swing.JFrame {
         });
 
         btnConnect.setText("Connect");
+        btnConnect.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConnectActionPerformed(evt);
+            }
+        });
 
         btnDisconnect.setText("Disconnect");
 
@@ -172,6 +196,23 @@ public class DBVerbindung extends javax.swing.JFrame {
     private void txtPortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPortActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPortActionPerformed
+
+    private void btnConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConnectActionPerformed
+        // TODO add your handling code here:
+            String port = txtPort.getText();
+            String user = txtUser.getText();
+            String server= txtServer.getText();
+            String db=txtDataBase.getText();
+            String pwd = txtPass.getText();
+            String url = "jdbc:mysql://" + server + "/" + db;
+            try {
+                
+                con = DriverManager.getConnection(url, user, pwd);
+                
+            } catch (SQLException ex) {
+                System.out.println("Fehler bei der Herstellen der Verbindung");
+            }
+    }//GEN-LAST:event_btnConnectActionPerformed
 
     /**
      * @param args the command line arguments
