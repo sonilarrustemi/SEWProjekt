@@ -8,6 +8,7 @@ package guiprojekt;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -21,6 +22,10 @@ public class DBVerbindung extends javax.swing.JFrame {
     /**
      * Creates new form DBVerbindung
      */
+    PreparedStatement ps_add=null;
+    PreparedStatement ps_delete=null;
+    PreparedStatement ps_update=null;
+    PreparedStatement ps_select=null;
     ResultSet rs_add=null;
     ResultSet rs_delete=null;
     ResultSet rs_update=null;
@@ -94,6 +99,11 @@ public class DBVerbindung extends javax.swing.JFrame {
         });
 
         btnDisconnect.setText("Disconnect");
+        btnDisconnect.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDisconnectActionPerformed(evt);
+            }
+        });
 
         txtPort.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -205,14 +215,37 @@ public class DBVerbindung extends javax.swing.JFrame {
             String db=txtDataBase.getText();
             String pwd = txtPass.getText();
             String url = "jdbc:mysql://" + server + "/" + db;
-            try {
-                
-                con = DriverManager.getConnection(url, user, pwd);
-                
-            } catch (SQLException ex) {
-                System.out.println("Fehler bei der Herstellen der Verbindung");
-            }
+        try {
+            txtPort.setEnabled(false);
+            txtUser.setEnabled(false);
+            txtServer.setEnabled(false);
+            txtDataBase.setEnabled(false);
+            txtPass.setEnabled(false);
+            btnConnect.setEnabled(false);
+            con = DriverManager.getConnection(url, user, pwd);
+            
+            
+        } catch (SQLException ex) {
+            System.out.println("Fehler bei der Herstellen der Verbindung");
+        }
+
     }//GEN-LAST:event_btnConnectActionPerformed
+
+    private void btnDisconnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisconnectActionPerformed
+        // TODO add your handling code here:
+        try {
+            con.close();
+            txtPort.setEnabled(true);
+            txtUser.setEnabled(true);
+            txtServer.setEnabled(true);
+            txtDataBase.setEnabled(true);
+            txtPass.setEnabled(true);
+            btnConnect.setEnabled(true);
+        } catch (SQLException ex) {
+            System.out.println("Fehler beim Schliessen der Verbindung");
+        }
+ 
+    }//GEN-LAST:event_btnDisconnectActionPerformed
 
     /**
      * @param args the command line arguments
