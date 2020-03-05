@@ -5,6 +5,7 @@
  */
 package guiprojekt;
 
+import static com.sun.xml.internal.fastinfoset.alphabet.BuiltInRestrictedAlphabets.table;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -105,11 +106,23 @@ public class DBVerbindung extends javax.swing.JFrame {
             }
         });
 
+        txtServer.setText("localhost");
+        txtServer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtServerActionPerformed(evt);
+            }
+        });
+
+        txtPort.setText("3306");
         txtPort.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPortActionPerformed(evt);
             }
         });
+
+        txtDataBase.setText("scott");
+
+        txtUser.setText("root");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -228,7 +241,24 @@ public class DBVerbindung extends javax.swing.JFrame {
         } catch (SQLException ex) {
             System.out.println("Fehler bei der Herstellen der Verbindung");
         }
-
+        
+        try {
+            md = con.getMetaData();
+      //Retrieving the columns in the database
+      ResultSet tables = md.getTables(null, null, null, null);
+      ResultSet columns = md.getColumns(null, null, "dept", null);
+      while (tables.next()) {
+    String tableName = tables.getString(3);
+    System.out.println(tableName);
+    while (columns.next()) {
+          System.out.println(columns.getString(4));
+}
+        }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Fehler bei der Herstellen der Verbindung");
+        }
     }//GEN-LAST:event_btnConnectActionPerformed
 
     private void btnDisconnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisconnectActionPerformed
@@ -246,6 +276,10 @@ public class DBVerbindung extends javax.swing.JFrame {
         }
  
     }//GEN-LAST:event_btnDisconnectActionPerformed
+
+    private void txtServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtServerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtServerActionPerformed
 
     /**
      * @param args the command line arguments

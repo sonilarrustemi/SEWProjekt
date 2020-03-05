@@ -172,15 +172,30 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtServer">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="localhost"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtServerActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtPort">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="3306"/>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPortActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtDataBase">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="scott"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtUser">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="root"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtPass">
     </Component>
